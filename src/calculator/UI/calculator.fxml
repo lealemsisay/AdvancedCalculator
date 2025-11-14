@@ -1,52 +1,152 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<VBox fx:id="root" alignment="CENTER" spacing="10" styleClass="root-box" stylesheets="@../styles/styles.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="calculator.Controller.CalculatorController">
-   <children>
-       
-       <TextField fx:id="display" editable="false" prefHeight="50" prefWidth="280" styleClass="display" stylesheets="@../styles/styles.css" />
+<VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" 
+      fx:controller="calculator.Controller.CalculatorController" 
+      fx:id="mainContainer"
+      alignment="TOP_CENTER" spacing="15">
    
-       <GridPane hgap="10" stylesheets="@../styles/styles.css" vgap="10">
-      <children>
-              <!-- Row 1 -->
-              <Button onAction="#handleButtonAction" text="7" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-              <Button onAction="#handleButtonAction" text="8" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-              <Button onAction="#handleButtonAction" text="9" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-              <Button onAction="#handleButtonAction" text="/" GridPane.columnIndex="3" GridPane.rowIndex="0" />
-              
-              <!-- Row 2 -->
-              <Button onAction="#handleButtonAction" text="4" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-              <Button onAction="#handleButtonAction" text="5" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-              <Button onAction="#handleButtonAction" text="6" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-              <Button onAction="#handleButtonAction" text="*" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-              
-              <!-- Row 3 -->
-              <Button onAction="#handleButtonAction" text="1" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-              <Button onAction="#handleButtonAction" text="2" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-              <Button onAction="#handleButtonAction" text="3" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-              <Button onAction="#handleButtonAction" text="-" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-              
-              <!-- Row 4 -->
-              <Button onAction="#handleButtonAction" text="0" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-              <Button onAction="#handleButtonAction" text="C" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-              <Button onAction="#handleButtonAction" text="=" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-              <Button onAction="#handleButtonAction" text="+" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-      </children>
+   <padding><Insets top="15" right="25" bottom="25" left="25"/></padding>
+   
+   <!-- Menu Bar with Theme Button -->
+   <HBox fx:id="menuBarContainer" spacing="0" alignment="CENTER_LEFT">
+      <!-- Settings Menu -->
+      <MenuBar fx:id="settingsMenuBar" styleClass="menu-bar">
+         <Menu text="Settings" fx:id="settingsMenu" styleClass="menu">
+            <Menu text="Calculator Mode">
+               <MenuItem text="Standard Mode" onAction="#handleStandardMode" fx:id="standardModeItem" styleClass="menu-item"/>
+               <MenuItem text="Advanced Mode" onAction="#handleAdvancedMode" fx:id="advancedModeItem" styleClass="menu-item"/>
+            </Menu>
+            <SeparatorMenuItem fx:id="modeSeparator"/>
+            <MenuItem text="Radians Mode" onAction="#handleRadiansMode" fx:id="radiansModeItem" styleClass="menu-item"/>
+            <MenuItem text="Degrees Mode" onAction="#handleDegreesMode" fx:id="degreesModeItem" styleClass="menu-item"/>
+            <SeparatorMenuItem fx:id="resetSeparator"/>
+            <MenuItem text="Reset Calculator" onAction="#handleReset" fx:id="resetItem" styleClass="menu-item"/>
+         </Menu>
+      </MenuBar>
+      
+      <!-- History Menu -->
+      <MenuBar fx:id="historyMenuBar" styleClass="menu-bar">
+         <Menu text="History" fx:id="historyMenu" styleClass="menu">
+            <MenuItem text="Clear History" onAction="#handleClearHistory" fx:id="clearHistoryItem" styleClass="menu-item"/>
+            <MenuItem text="Show History" onAction="#handleShowHistory" fx:id="showHistoryItem" styleClass="menu-item"/>
+         </Menu>
+      </MenuBar>
+      
+      <!-- Theme Toggle Button -->
+      <Button fx:id="themeToggleButton" text="🌙" onAction="#handleToggleTheme" styleClass="theme-toggle-button"/>
+      
+      <!-- Help Menu -->
+      <MenuBar fx:id="helpMenuBar" styleClass="menu-bar">
+         <Menu text="Help" fx:id="helpMenu" styleClass="menu">
+            <MenuItem text="About" onAction="#handleAbout" fx:id="aboutItem" styleClass="menu-item"/>
+         </Menu>
+      </MenuBar>
+   </HBox>
+   
+   <!-- Mode Indicator -->
+   <Label fx:id="modeIndicator" text="Standard Mode" styleClass="mode-indicator"/>
+   
+   <!-- Display Field -->
+   <TextField fx:id="display" prefWidth="600" prefHeight="60" editable="false" styleClass="display-field"/>
+   
+   <!-- Calculator Buttons Section -->
+   <VBox spacing="10" alignment="CENTER">
+      <Label fx:id="calculatorLabel" text="Calculator" styleClass="calculator-label"/>
+      
+      <!-- GridPane with adjustable spacing -->
+      <GridPane fx:id="buttonGrid" styleClass="button-grid">
          <columnConstraints>
-            <ColumnConstraints />
-            <ColumnConstraints />
-            <ColumnConstraints />
-            <ColumnConstraints />
+            <ColumnConstraints prefWidth="55"/>
+            <ColumnConstraints prefWidth="55"/>
+            <ColumnConstraints prefWidth="55"/>
+            <ColumnConstraints prefWidth="55"/>
+            <ColumnConstraints prefWidth="55"/>
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
+            <RowConstraints prefHeight="40"/>
+            <RowConstraints prefHeight="40"/>
+            <RowConstraints prefHeight="40"/>
+            <RowConstraints prefHeight="40"/>
+            <RowConstraints prefHeight="40"/>
+            <RowConstraints prefHeight="40"/>
+            <RowConstraints prefHeight="40"/>
+            <RowConstraints prefHeight="40"/>
+            <RowConstraints prefHeight="40"/>
+            <RowConstraints prefHeight="40"/>
          </rowConstraints>
-       </GridPane>
-   </children>
+         
+         <!-- Row 0 - Memory Buttons (Visible in both modes) -->
+         <Button fx:id="mcButton" text="MC" onAction="#handleButtonAction" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+         <Button fx:id="mrButton" text="MR" onAction="#handleButtonAction" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+         <Button fx:id="msButton" text="MS" onAction="#handleButtonAction" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+         <Button fx:id="mPlusButton" text="M+" onAction="#handleButtonAction" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+         <Button fx:id="mMinusButton" text="M-" onAction="#handleButtonAction" GridPane.columnIndex="4" GridPane.rowIndex="0"/>
+         
+         <!-- Row 1 - Numbers and Operations (Visible in both modes) -->
+         <Button fx:id="button7" text="7" onAction="#handleButtonAction" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+         <Button fx:id="button8" text="8" onAction="#handleButtonAction" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+         <Button fx:id="button9" text="9" onAction="#handleButtonAction" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+         <Button fx:id="divButton" text="/" onAction="#handleButtonAction" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+         <Button fx:id="cButton" text="C" onAction="#handleButtonAction" GridPane.columnIndex="4" GridPane.rowIndex="1"/>
+         
+         <!-- Row 2 - Numbers and Operations (Visible in both modes) -->
+         <Button fx:id="button4" text="4" onAction="#handleButtonAction" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+         <Button fx:id="button5" text="5" onAction="#handleButtonAction" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+         <Button fx:id="button6" text="6" onAction="#handleButtonAction" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+         <Button fx:id="multButton" text="*" onAction="#handleButtonAction" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+         <Button fx:id="openParenButton" text="(" onAction="#handleButtonAction" GridPane.columnIndex="4" GridPane.rowIndex="2"/>
+         
+         <!-- Row 3 - Numbers and Operations (Visible in both modes) -->
+         <Button fx:id="button1" text="1" onAction="#handleButtonAction" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+         <Button fx:id="button2" text="2" onAction="#handleButtonAction" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+         <Button fx:id="button3" text="3" onAction="#handleButtonAction" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+         <Button fx:id="minusButton" text="-" onAction="#handleButtonAction" GridPane.columnIndex="3" GridPane.rowIndex="3"/>
+         <Button fx:id="closeParenButton" text=")" onAction="#handleButtonAction" GridPane.columnIndex="4" GridPane.rowIndex="3"/>
+         
+         <!-- Row 4 - Numbers and Operations (Visible in both modes) -->
+         <Button fx:id="button0" text="0" onAction="#handleButtonAction" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+         <Button fx:id="signButton" text="+/-" onAction="#handleButtonAction" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+         <Button fx:id="equalButton" text="=" onAction="#handleButtonAction" GridPane.columnIndex="2" GridPane.rowIndex="4"/>
+         <Button fx:id="plusButton" text="+" onAction="#handleButtonAction" GridPane.columnIndex="3" GridPane.rowIndex="4"/>
+         <Button fx:id="delButton" text="DEL" onAction="#handleButtonAction" GridPane.columnIndex="4" GridPane.rowIndex="4"/>
+         
+         <!-- Row 5 - Decimal and Basic Scientific -->
+         <Button fx:id="decButton" text="." onAction="#handleButtonAction" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+         <Button fx:id="sinButton" text="sin" onAction="#handleButtonAction" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+         <Button fx:id="cosButton" text="cos" onAction="#handleButtonAction" GridPane.columnIndex="2" GridPane.rowIndex="5"/>
+         <Button fx:id="tanButton" text="tan" onAction="#handleButtonAction" GridPane.columnIndex="3" GridPane.rowIndex="5"/>
+         <Button fx:id="cotButton" text="cot" onAction="#handleButtonAction" GridPane.columnIndex="4" GridPane.rowIndex="5"/>
+         
+         <!-- Row 6 - Reciprocal Trig Functions -->
+         <Button fx:id="secButton" text="sec" onAction="#handleButtonAction" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+         <Button fx:id="cscButton" text="csc" onAction="#handleButtonAction" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+         <Button fx:id="asinButton" text="asin" onAction="#handleButtonAction" GridPane.columnIndex="2" GridPane.rowIndex="6"/>
+         <Button fx:id="acosButton" text="acos" onAction="#handleButtonAction" GridPane.columnIndex="3" GridPane.rowIndex="6"/>
+         <Button fx:id="atanButton" text="atan" onAction="#handleButtonAction" GridPane.columnIndex="4" GridPane.rowIndex="6"/>
+         
+         <!-- Row 7 - Logarithmic and Root Functions -->
+         <Button fx:id="logButton" text="log" onAction="#handleButtonAction" GridPane.columnIndex="0" GridPane.rowIndex="7"/>
+         <Button fx:id="lnButton" text="ln" onAction="#handleButtonAction" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+         <Button fx:id="sqrtButton" text="sqrt" onAction="#handleButtonAction" GridPane.columnIndex="2" GridPane.rowIndex="7"/>
+         <Button fx:id="absButton" text="abs" onAction="#handleButtonAction" GridPane.columnIndex="3" GridPane.rowIndex="7"/>
+         <Button fx:id="factorialButton" text="!" onAction="#handleButtonAction" GridPane.columnIndex="4" GridPane.rowIndex="7"/>
+         
+         <!-- Row 8 - Advanced Functions Row 1 -->
+         <Button fx:id="eButton" text="e" onAction="#handleButtonAction" GridPane.columnIndex="0" GridPane.rowIndex="8"/>
+         <Button fx:id="derivButton" text="deriv" onAction="#handleButtonAction" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+         <Button fx:id="integButton" text="integ" onAction="#handleButtonAction" GridPane.columnIndex="2" GridPane.rowIndex="8"/>
+         <Button fx:id="limButton" text="lim" onAction="#handleButtonAction" GridPane.columnIndex="3" GridPane.rowIndex="8"/>
+         <Button fx:id="x2Button" text="x^2" onAction="#handleButtonAction" GridPane.columnIndex="4" GridPane.rowIndex="8"/>
+         
+         <!-- Row 9 - Advanced Functions Row 2 -->
+         <Button fx:id="piButton" text="π" onAction="#handleButtonAction" GridPane.columnIndex="0" GridPane.rowIndex="9"/>
+         <Button fx:id="xButton" text="x" onAction="#handleButtonAction" GridPane.columnIndex="1" GridPane.rowIndex="9"/>
+         <Button fx:id="quadButton" text="Quad" onAction="#handleButtonAction" GridPane.columnIndex="2" GridPane.rowIndex="9"/>
+         <Button fx:id="linearButton" text="Linear" onAction="#handleButtonAction" GridPane.columnIndex="3" GridPane.rowIndex="9"/>
+      </GridPane>
+   </VBox>
 </VBox>
