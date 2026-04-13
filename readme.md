@@ -69,4 +69,8 @@ It is designed with a clean and interactive user interface, making it suitable f
 - `src/calculator/styles/styles.css` — Stylesheet for simple styling.
 - `build/` — Compiled classes and build artifacts (ignored when contributing).
 
- ![Image Alt](image_url)
+ ![Image Alt](https://github.com/lealemsisay/AdvancedCalculator/blob/b7eb4bc1655205c3bc84f09e0edc99d611d9aa4c/Screenshot%202026-04-13%20120732.png)
+  ![Image Alt](https://github.com/lealemsisay/AdvancedCalculator/blob/b7eb4bc1655205c3bc84f09e0edc99d611d9aa4c/Screenshot%202026-04-13%20121051.png)
+   ![Image Alt](https://github.com/lealemsisay/AdvancedCalculator/blob/b7eb4bc1655205c3bc84f09e0edc99d611d9aa4c/Screenshot%202026-04-13%20120906.png)
+    ![Image Alt](https://github.com/lealemsisay/AdvancedCalculator/blob/b7eb4bc1655205c3bc84f09e0edc99d611d9aa4c/Screenshot%202026-04-13%20121015.png)
+     ![Image Alt](https://github.com/lealemsisay/AdvancedCalculator/blob/b7eb4bc1655205c3bc84f09e0edc99d611d9aa4c/Screenshot%202026-04-13%20121051.png)
